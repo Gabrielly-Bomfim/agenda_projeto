@@ -1,12 +1,20 @@
-//contatos .h = tratamento de erros, struct e array
+#define CONTATOS_H 
+//definindo o tamanho maximo do array
+#define MAX_CONTATOS 255 
 
-#define CONTATOS_LIMITE 255
-struct agenda{
-  char nome[10];
-  char sobrenome [10];
-  char telefone[10];
-  char email [20];
-}CONTATOS_LIMITE; 
+typedef struct {//definindo as variaveis que vamo pedir na função
+    char nome[10];
+    char sobrenome[10];
+    char telefone[10];
+    char email[20];
+} CONTATO;//definindo o struct
+
+void criando_contatos(CONTATO[], int*);//função para criar contato, com os parametros das variavei e da posição
+void clearBuffer();//chamando função limpar buffer
+
+
+
+
 
 
 
