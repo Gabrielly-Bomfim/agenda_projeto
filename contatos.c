@@ -29,4 +29,58 @@ void criando_contatos(CONTATO CONTATOS_LIMITE[], int *posicao) {//função para 
     clearBuffer();
     
     *posicao = *posicao + 1; }//atualizando a posição do contato 
+    salvar( CONTATOS_LIMITE, *posicao);
+
+  
+}
+
+
+void salvar(CONTATO CONTATOS_LIMITE[], int *posicao){//função salvar os contatos
+  FILE *cont = fopen("contatos.bin", "wb");//abrindo o arquivo
+      if(cont == 0){//verificando se existe
+        printf("--------Erro ---------\n");
+        return;
+      }
+  
+      int agen = fwrite(CONTATOS_LIMITE, sizeof(CONTATO), posicao, cont);//escrevendo o contato
+      if (agen == 0) {//erro ao salvar 
+          printf("---------Erro: Salvar-------\n");
+          fclose(cont);
+          return;
+      }
+     
+      agen = fwrite(&posicao, sizeof(int), 1, cont);//escrevendo a posição
+      if (agen == 0) {//vendo se foi salva
+          printf("---------Erro: Salvar-------\n");
+          fclose(cont);
+          return;
+      }
+      if(fclose(cont) != 0 ){//verificando o erro ao fechar
+        printf("---------Erro: Fechar-------\n");  
+        return;
+      }
+}
+
+void deletar(CONTATO CONTATOS_LIMITE[], int *posicao){
+  
+  printf("**********Deletar contato**********\n");
+  
+  if(*posicao == 0){
+      printf("-------------Não há contatos salvos-------------\n");
+    }
+  //verificando o numero a ser deletado 
+  int numero;
+  printf("Qual o numero que vai ser deletado:");
+  scanf("%d", &numero);
+  //limando o buffer
+  clearBuffer();
+  
+  for(int n = numero; n < *posicao - 1; n++){
+    strcpy(CONTATOS_LIMITE[n].nome, CONTATOS_LIMITE[n+1].nome);//deletando o nome 
+    strcpy(CONTATOS_LIMITE[n].sobrenome, CONTATOS_LIMITE[n+1].sobrenome);//deletando o sobrenome
+    strcpy(CONTATOS_LIMITE[n].telefone, CONTATOS_LIMITE[n+1].telefone);//deletando o telefone
+  }
+  *posicao = *posicao - 1;
+  return;
+  
 }

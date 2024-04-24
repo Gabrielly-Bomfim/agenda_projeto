@@ -20,14 +20,15 @@ int main() {
 
         if (num_escolhido == 1) {//Se a opção for 1
             printf("---------Cadastrar contato----------\n");
-            criando_contatos(CONTATOS_LIMITE, &posicao); // chamando a função da contatos.c
-            
+            criando_contatos(CONTATOS_LIMITE, &posicao); // chamando a função da contatos.c 
+          
         } else if (num_escolhido == 2) {//Se a opção for 2
             printf("Listar contatos\n");
           
         } else if (num_escolhido == 3) {//Se a opção for 3
             printf("Deletar contatos\n");
-        
+            deletar(CONTATOS_LIMITE, &posicao);
+          
         } else if (num_escolhido == 0) {//Se a opção for 0
             printf("Saindo...\n");
         } else {//Se não for nenhuma das opções 
