@@ -118,3 +118,15 @@ void carregar(CONTATO CONTATOS_LIMITE[], int *posicao){
   }
 }
 
+void listar(CONTATO CONTATOS_LIMITE[], int *posicao){//FUNÇÃO LISTAR 
+  printf("************LISTAR CONTATOS************\n"); 
+  if(*posicao == 0){//verificando se a posição é 0 
+    printf("-------------ERRO-------------\n"); 
+    return;//retornando erro 
+  } for(int i=0; i<*posicao; i++){//percorrendo o array
+        printf("\nNome: %s\n", CONTATOS_LIMITE[i].nome);//listando o nome     
+        printf("Sobrenome: %s\n", CONTATOS_LIMITE[i].sobrenome); //listando o sobrenome 
+    printf("Telefone: %s\n", CONTATOS_LIMITE[i].telefone);//listando o telefone 
+    printf("Email: %s\n", CONTATOS_LIMITE[i].email);//listando o email
+    printf("------------------------------------------------"); } 
+}//fim
