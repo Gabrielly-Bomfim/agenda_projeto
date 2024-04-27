@@ -12,6 +12,8 @@ typedef struct {//definindo as variaveis que vamo pedir na função
 void criando_contatos(CONTATO[], int*);//função para criar contato, com os parametros das variavei e da posição
 void salvar(CONTATO[], int*);
 void deletar(CONTATO[], int*);
+void carregar(CONTATO[], int*);
+
 void clearBuffer();//chamando função limpar buffer
 
 

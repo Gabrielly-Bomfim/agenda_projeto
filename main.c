@@ -23,10 +23,10 @@ int main() {
             criando_contatos(CONTATOS_LIMITE, &posicao); // chamando a função da contatos.c 
           
         } else if (num_escolhido == 2) {//Se a opção for 2
-            printf("Listar contatos\n");
-          
+            printf("*************Listar contatos*************\n");
+            
         } else if (num_escolhido == 3) {//Se a opção for 3
-            printf("Deletar contatos\n");
+            printf("************Deletar contatos*************\n");
             deletar(CONTATOS_LIMITE, &posicao);
           
         } else if (num_escolhido == 0) {//Se a opção for 0
