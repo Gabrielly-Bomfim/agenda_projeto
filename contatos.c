@@ -61,26 +61,60 @@ void salvar(CONTATO CONTATOS_LIMITE[], int *posicao){//função salvar os contat
       }
 }
 
-void deletar(CONTATO CONTATOS_LIMITE[], int *posicao){
+void deletar(CONTATO CONTATOS_LIMITE[], int *posicao){//funçao deletar 
   
   printf("**********Deletar contato**********\n");
   
-  if(*posicao == 0){
+  if(*posicao == 0){//verificando se tem contatos salvos
       printf("-------------Não há contatos salvos-------------\n");
+      return;//retornando erro
     }
   //verificando o numero a ser deletado 
   int numero;
   printf("Qual o numero que vai ser deletado:");
-  scanf("%d", &numero);
+  scanf("%d", &numero);//pegando o numero telefonico
   //limando o buffer
   clearBuffer();
+  if(numero<*posicao || numero <0){//verificando se o numero é invalido
+    printf("-------------Numero invalido-------------\n");
+    return;//retornando erros 
+  }
   
-  for(int n = numero; n < *posicao - 1; n++){
+  for(int n = numero; n >= *posicao - 1; n++){//percorrendo o array
     strcpy(CONTATOS_LIMITE[n].nome, CONTATOS_LIMITE[n+1].nome);//deletando o nome 
     strcpy(CONTATOS_LIMITE[n].sobrenome, CONTATOS_LIMITE[n+1].sobrenome);//deletando o sobrenome
     strcpy(CONTATOS_LIMITE[n].telefone, CONTATOS_LIMITE[n+1].telefone);//deletando o telefone
+    strcpy(CONTATOS_LIMITE[n].email, CONTATOS_LIMITE[n+1].email);
+    
   }
   *posicao = *posicao - 1;
-  return;
+  carregar(CONTATOS_LIMITE, *posicao);
+  
   
 }
+
+void carregar(CONTATO CONTATOS_LIMITE[], int *posicao){
+  FILE *cont = fopen("contatos.bin", "rb");
+  if (cont == NULL){
+    printf("--------ERRO--------");
+    return;
+  }
+  
+  int agen = fread(CONTATOS_LIMITE, MAX_CONTATOS, sizeof(CONTATO), cont); 
+  if (agen < MAX_CONTATOS){
+    printf("--------ERRO--------");
+    fclose(cont);
+    return;
+  }
+
+  agen = fread(posicao, sizeof(int), 1, cont);
+
+  if(agen < 1){
+    printf("---Erro ao ler---");
+    fclose(cont);
+  }
+  if(fclose(cont)){
+    printf("----erro ao fechaar-----");
+  }
+}
+
