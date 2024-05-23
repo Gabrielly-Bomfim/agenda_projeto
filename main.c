@@ -24,7 +24,6 @@ int main() {
           
         } else if (num_escolhido == 2) {//Se a opção for 2
             printf("*************Listar contatos*************\n");
-            printf("*************Listar contatos*************\n");   
             listar(CONTATOS_LIMITE, &posicao);
           
         } else if (num_escolhido == 3) {//Se a opção for 3
