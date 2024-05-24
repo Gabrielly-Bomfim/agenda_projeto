@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "contatos.h"//incluindo o contatos.h
 
 void clearBuffer() {//função para limpar a quebra de linha e o fim do contato
@@ -29,61 +31,89 @@ void carregar(CONTATO CONTATOS_LIMITE[], int *posicao){
     printf("----erro ao fechaar-----");
   }
 }
+int validar_email(char *email) {
+  int tam = strlen(email);
+  int arroba = 0;
+  int ponto = 0;
 
-void criando_contatos(CONTATO CONTATOS_LIMITE[], int *posicao) {//função para criar contatos, com o parametro de posição e as variaveis do struct da .h
-  
-    if (*posicao >= MAX_CONTATOS){//verificando se a posição é maior que o limite
-      printf("Limite de contatos atingido.\n");//se sim, não é possivel continuar
-    }else{// caso não seja maior 
-    printf("\n\n*******CRIE SEU CONTATO*******\n");
-    printf("Digite o nome do contato:\n ");
-    scanf("%s", CONTATOS_LIMITE[*posicao].nome);//pegando o nome do contato
-    clearBuffer();
+  for (int i = 0; i < tam; i++) {
+      char c = email[i];
 
-    printf("Digite o sobrenome do contato:\n ");
-    scanf("%s", &CONTATOS_LIMITE[*posicao].sobrenome);//pegando o sobrenome 
-    clearBuffer();
-    
-    printf("Digite o telefone do contato:\n ");
-    scanf("%s", &CONTATOS_LIMITE[*posicao].telefone);//pegando o telefone
-    clearBuffer();
-    
-    printf("Digite o email do contato:\n ");
-    scanf("%s", &CONTATOS_LIMITE[*posicao].email);//pegando o email 
-    clearBuffer();
-    
-    
-    *posicao = *posicao + 1; }//atualizando a posição do contato 
-    salvar( CONTATOS_LIMITE, *posicao);
+      if (c == '@') {
+          if (i >= 3) {
+              arroba = 1;
+          }
+      }
+      if (c == '.') {
+          if (i < tam - 3) {
+              ponto = 1;
+          }
+      }
+  }
 
-  
+  if (arroba && ponto) {
+      printf("cadastrado!!\n");
+      return 1;
+  } else {
+      printf("Email inválido!\n");
+      return 0;
+  }
 }
 
+void criando_contatos(CONTATO CONTATOS_LIMITE[], int *posicao) {
+  if (*posicao >= MAX_CONTATOS) {
+      printf("Limite de contatos atingido.\n");
+  } else {
+      printf("\n\n*******CRIE SEU CONTATO*******\n");
+      printf("Digite o nome do contato:\n ");
+      scanf("%s", CONTATOS_LIMITE[*posicao].nome);
+      clearBuffer();
 
-void salvar(CONTATO CONTATOS_LIMITE[], int *posicao){//função salvar os contatos
-  FILE *cont = fopen("contatos.bin", "wb");//abrindo o arquivo
-      if(cont == 0){//verificando se existe
-        printf("--------Erro ---------\n");
-        return;
+      printf("Digite o sobrenome do contato:\n ");
+      scanf("%s", CONTATOS_LIMITE[*posicao].sobrenome);
+      clearBuffer();
+
+      printf("Digite o telefone do contato:\n ");
+      scanf("%s", CONTATOS_LIMITE[*posicao].telefone);
+      clearBuffer();
+
+      printf("Digite o email do contato:\n ");
+      scanf("%s", CONTATOS_LIMITE[*posicao].email);
+      int email_valido = validar_email(CONTATOS_LIMITE[*posicao].email); 
+      clearBuffer();
+
+      if (email_valido) {
+          *posicao = *posicao + 1;
+          salvar(CONTATOS_LIMITE, posicao);
       }
-  
-      int agen = fwrite(CONTATOS_LIMITE, sizeof(CONTATO), posicao, cont);//escrevendo o contato
-      if (agen == 0) {//erro ao salvar 
-          printf("---------Erro: Salvar-------\n");
-          fclose(cont);
-          return;
-      }
-     
-      agen = fwrite(&posicao, sizeof(int), 1, cont);//escrevendo a posição
-      if (agen == 0) {//vendo se foi salva
-          printf("---------Erro: Salvar-------\n");
-          fclose(cont);
-          return;
-      }
-      if(fclose(cont) != 0 ){//verificando o erro ao fechar
-        printf("---------Erro: Fechar-------\n");  
-        return;
-      }
+  }
+}
+
+void salvar(CONTATO CONTATOS_LIMITE[], int *posicao) {
+  FILE *cont = fopen("contatos.bin", "wb");
+  if (cont == NULL) {
+      printf("Erro ao abrir o arquivo.\n");
+      return;
+  }
+
+  int agen = fwrite(CONTATOS_LIMITE, sizeof(CONTATO), *posicao, cont);
+  if (agen == 0) {
+      printf("Erro ao salvar os contatos.\n");
+      fclose(cont);
+      return;
+  }
+
+  agen = fwrite(posicao, sizeof(int), 1, cont);
+  if (agen == 0) {
+      printf("Erro ao salvar a posição.\n");
+      fclose(cont);
+      return;
+  }
+
+  if (fclose(cont) != 0) {
+      printf("Erro ao fechar o arquivo.\n");
+      return;
+  }
 }
 
 void deletar(CONTATO CONTATOS_LIMITE[], int *posicao){
