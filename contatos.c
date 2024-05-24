@@ -170,4 +170,37 @@ void listar(CONTATO CONTATOS_LIMITE[], int *posicao){//FUNÇÃO LISTAR
     printf("Telefone: %s\n", CONTATOS_LIMITE[i].telefone);//listando o telefone 
     printf("Email: %s\n", CONTATOS_LIMITE[i].email);//listando o email
     printf("------------------------------------------------"); } 
-}//fim
+}
+
+void alterar_dados(CONTATO CONTATOS_LIMITE[], int *posicao) {
+  
+    int pos;
+    printf("Digite a posição do contato que deseja alterar:\n");
+    scanf("%d", &pos);
+    clearBuffer();
+
+    if (pos < 1 || pos > *posicao) {
+        printf("Índice inválido.\n");
+        return;
+    }
+
+    printf("\nDigite o novo nome do contato:\n");
+    scanf("%s", CONTATOS_LIMITE[pos - 1].nome);
+    clearBuffer();
+
+    printf("Digite o novo sobrenome do contato:\n");
+    scanf("%s", CONTATOS_LIMITE[pos - 1].sobrenome);
+    clearBuffer();
+
+    printf("Digite o novo telefone do contato:\n");
+    scanf("%s", CONTATOS_LIMITE[pos - 1].telefone);
+    clearBuffer();
+
+    printf("Digite o novo email do contato:\n");
+    scanf("%s", CONTATOS_LIMITE[pos - 1].email);
+    clearBuffer();
+
+    printf("Contato alterado com sucesso!\n");
+    salvar(CONTATOS_LIMITE, posicao);
+}
+//fim
