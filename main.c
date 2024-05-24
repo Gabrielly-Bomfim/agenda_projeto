@@ -14,6 +14,7 @@ int main() {
         printf("1 - Cadastrar contato\n");//opções
         printf("2 - Listar contatos\n");//opções
         printf("3 - Deletar contato\n");//opções
+        printf("4-Alterar dados de um contato\n");//opções
         printf("0 - Sair\n");//opções
         scanf("%d", &num_escolhido);//verificando a opção escolhida
         clearBuffer();//limpando o buffer
@@ -30,6 +31,9 @@ int main() {
             printf("************Deletar contatos*************\n");
             deletar(CONTATOS_LIMITE, &posicao);
           
+        }else if(num_escolhido ==4){
+            printf("************Alterar contatos*************\n");
+            alterar_dados(CONTATOS_LIMITE, &posicao);
         } else if (num_escolhido == 0) {//Se a opção for 0
             printf("Saindo...\n");
         } else {//Se não for nenhuma das opções 

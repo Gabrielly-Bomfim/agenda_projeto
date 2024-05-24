@@ -13,7 +13,7 @@ void criando_contatos(CONTATO[], int*);//função para criar contato, com os par
 void salvar(CONTATO[], int*);
 void deletar(CONTATO[], int*);
 void carregar(CONTATO[], int*);
-
+void alterar_dados(CONTATO[], int*);
 void listar(CONTATO[], int*);
 void clearBuffer();//chamando função limpar buffer
 
