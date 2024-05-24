@@ -6,15 +6,17 @@ int main() {
 
     
     CONTATO CONTATOS_LIMITE[MAX_CONTATOS];//array 
-
+    CONT_TRABALHO LIMITE_TRAB[MAX_CONTATOS];
     int num_escolhido;//variavel da opção escolhida
 
     do {//inicio do loop
         printf("\n***BEM-VINDO À AGENDA***\n");
-        printf("1 - Cadastrar contato\n");//opções
+        printf("1 - Cadastrar contato pessoal\n");//opções
         printf("2 - Listar contatos\n");//opções
         printf("3 - Deletar contato\n");//opções
-        printf("4-Alterar dados de um contato\n");//opções
+        printf("4 - Alterar dados de um contato\n");//opções
+        printf("5 - Cadastrar contato do trabalho\n");//opções
+        printf("6 - Deletar contato do trabalho\n");//opções
         printf("0 - Sair\n");//opções
         scanf("%d", &num_escolhido);//verificando a opção escolhida
         clearBuffer();//limpando o buffer
@@ -36,7 +38,13 @@ int main() {
             alterar_dados(CONTATOS_LIMITE, &posicao);
         } else if (num_escolhido == 0) {//Se a opção for 0
             printf("Saindo...\n");
-        } else {//Se não for nenhuma das opções 
+        } else if (num_escolhido ==5){
+            printf("************Cadastrar contatos do trabalho*************\n");
+            trabalho(LIMITE_TRAB, &posicao);
+        }else if (num_escolhido ==6) {
+            printf("************Deletar contatos do trabalho*************\n");
+            deletar_trab(LIMITE_TRAB, &posicao);
+        }else {//Se não for nenhuma das opções 
             printf("Opção inválida.\n");
         }
     } while (num_escolhido != 0);
