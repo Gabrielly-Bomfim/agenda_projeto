@@ -59,7 +59,16 @@ int validar_email(char *email) {
       return 0;
   }
 }
+int validar_telefone(CONTATO CONTATOS_LIMITE[], int *posicao, char *telefone) {
 
+    for (int i = 0; i < *posicao; i++) {
+        if (strcmp(telefone, CONTATOS_LIMITE[i].telefone) == 0) {
+            printf("Telefone já cadastrado!\n Não pode ser cadastrado\n");
+            return 0;
+        }
+    }
+    return 1;
+}
 void criando_contatos(CONTATO CONTATOS_LIMITE[], int *posicao) {
   if (*posicao >= MAX_CONTATOS) {
       printf("Limite de contatos atingido.\n");
@@ -76,18 +85,19 @@ void criando_contatos(CONTATO CONTATOS_LIMITE[], int *posicao) {
       printf("Digite o telefone do contato:\n ");
       scanf("%s", CONTATOS_LIMITE[*posicao].telefone);
       clearBuffer();
+      int telefone_valido = validar_telefone(CONTATOS_LIMITE, posicao, CONTATOS_LIMITE[*posicao].telefone); 
 
       printf("Digite o email do contato:\n ");
       scanf("%s", CONTATOS_LIMITE[*posicao].email);
       int email_valido = validar_email(CONTATOS_LIMITE[*posicao].email); 
       clearBuffer();
 
-      if (email_valido) {
-          *posicao = *posicao + 1;
-          salvar(CONTATOS_LIMITE, posicao);
-      }
-  }
-}
+     if (validar_email(CONTATOS_LIMITE[*posicao].email) && validar_telefone(CONTATOS_LIMITE, posicao, CONTATOS_LIMITE[*posicao].telefone)) {
+                *posicao = *posicao + 1;
+                salvar(CONTATOS_LIMITE, posicao);
+            }
+        }
+    }
 
 void salvar(CONTATO CONTATOS_LIMITE[], int *posicao) {
   FILE *cont = fopen("contatos.bin", "wb");
